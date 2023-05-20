@@ -1,10 +1,10 @@
-# Infinite Read-Count 无限阅读量 推量工具 By 轩哥啊哈OvO
+# Infinite Read-Count 无限阅读量 推量工具
 
 Copyright (c) 2023 XuangeAha(轩哥啊哈OvO)
 
 ## 使用方法
 
-将需推量的博客地址填入`urls.txt`放入`infrc.exe`同目录中，一行一个，以 “#” 开头将作为注释被忽略。双击`infrc.exe`运行。示例：
+将需推量的博客地址填入 `urls.txt`放入 `infrc.exe`同目录中，一行一个，以 “#” 开头将作为注释被忽略。双击 `infrc.exe`运行。示例：
 
 ```plaintext
 # Infrc (Infinite Read-Count 无限阅读量) 推量工具 By 轩哥啊哈OvO
@@ -27,7 +27,7 @@ https://xuangeaha.blog.csdn.net/article/details/130441906
 
 ```
 
-可在同目录下的`config.json`中配置等待时间（默认为30-40秒）：
+可在同目录下的 `config.json`中配置等待时间（默认为30-40秒）：
 
 ```json
 {
