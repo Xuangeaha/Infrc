@@ -1,4 +1,5 @@
 {
+    "urls": "urls.txt",
     "sleep_time": {
         "min": 30,
         "max": 40

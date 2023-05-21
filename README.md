@@ -4,7 +4,7 @@ Copyright (c) 2023 XuangeAha(轩哥啊哈OvO)
 
 ## 使用方法
 
-将需推量的博客地址填入 `urls.txt`放入 `infrc.exe`同目录中，一行一个，以 “#” 开头将作为注释被忽略。双击 `infrc.exe`运行。示例：
+将需推量的博客地址填入 `urls.txt` 中，一行一个，以 “#” 开头将作为注释被忽略。示例：
 
 ```plaintext
 # Infrc (Infinite Read-Count 无限阅读量) 推量工具 By 轩哥啊哈OvO
@@ -24,17 +24,38 @@ https://xuangeaha.blog.csdn.net/article/details/130655328
 
 # 2023年4月
 https://xuangeaha.blog.csdn.net/article/details/130441906
-
 ```
 
-可在同目录下的 `config.json`中配置等待时间（默认为30-40秒）：
+接下来，您可以：
+
+1. 将 `urls.txt` 放入 `infrc.exe` 同目录中，双击 `infrc.exe` 直接运行。
+
+2. 或者，将目录加入环境变量中，在终端中输入：
+
+```bash
+infrc [文件地址]
+```
+
+此时，文件名不一定需是 `urls.txt` 。
+
+3. 或者，在同目录下的 `config.json` 中配置文件地址：
 
 ```json
 {
+    "urls": "urls.txt"
+}
+```
+
+此时，文件名也不一定需是 `urls.txt` 。
+
+您也可以在 `config.json` 中配置等待时间（默认为30-40秒）：
+
+```json
+{
+    "urls": "urls.txt",
     "sleep_time": {
         "min": 30,
         "max": 40
     }
 }
-
 ```
