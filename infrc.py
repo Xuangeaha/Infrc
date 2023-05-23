@@ -5,10 +5,11 @@ import time
 import random
 import requests
 
-i = 1
+trial = 1
 
 def get_page(url):
     '''伪装成点击在浏览器从CSDN博客搜索到的文章'''
+    global trial
     try:
         user_agent_list = [
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.75 Safari/537.36",
@@ -125,13 +126,13 @@ def get_page(url):
         }  # 伪装成随机ip地址防止被封
         response = requests.get(url, headers=headers, proxies=proxies)
         if response.status_code == 200:
+            trial = 1
             return response.text
     except requests.RequestException:
-        global i
-        while i <= 3:
-            print("请求出错："+url+" 访问错误，10s 后重新尝试第 "+str(i)+" 次……")
+        while trial <= 3:
+            print("请求出错："+url+" 访问错误，10s 后重新尝试第 "+str(trial)+" 次……")
             time.sleep(10)
-            i += 1
+            trial += 1
             get_page(url)
         _ = input('[Infrc002] 请求出错：请检查 '+filepath+' 中 '+url+' 中是否存在拼写错误...')
         sys.exit()
@@ -139,9 +140,15 @@ def get_page(url):
 def view_page(url):
     '''获取当前博客访问量'''
     global read_num
+    global blog_type
     try:
-        read_num = int(re.compile(
-            '<span class="read-count">(.*?)</span>').search(get_page(url)).group(1))
+        if "csdn" in url:
+            blog_type = "[CSDN]"
+            read_num = int(re.compile(
+                '<span class="read-count">(.*?)</span>').search(get_page(url)).group(1))
+        else:
+            blog_type = "[未知]"
+            read_num = ""
     except AttributeError:
         read_num = "获取失败..."
 
@@ -174,7 +181,7 @@ def main():
                 if url == "\n" or url[0] == "#":
                     continue
                 view_page(url.rstrip())
-                print(url.rstrip(), read_num)
+                print(blog_type, url.rstrip(), read_num)
         try:
             with open("config.json", encoding="utf-8") as configs:
                 config = json.load(configs)
