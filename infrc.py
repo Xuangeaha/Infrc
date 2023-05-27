@@ -7,6 +7,17 @@ import requests
 
 trial = 1
 
+class Bcolors:
+    '''命令行彩色与格式输出'''
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    END = '\033[0m'
+    BOLD = '\033[1m'
+
 def get_page(url):
     '''伪装成点击在浏览器从CSDN博客搜索到的文章'''
     global trial
@@ -130,11 +141,11 @@ def get_page(url):
             return response.text
     except requests.RequestException:
         while trial <= 3:
-            print("请求出错："+url+" 访问错误，10s 后重新尝试第 "+str(trial)+" 次……")
+            print(f"{Bcolors.BOLD}{Bcolors.WARNING}请求出错{Bcolors.END}{Bcolors.WARNING}："+url+" 访问错误，10s 后重新尝试第 "+str(trial)+f" 次...{Bcolors.END}")
             time.sleep(10)
             trial += 1
             get_page(url)
-        _ = input('[Infrc002] 请求出错：请检查 '+filepath+' 中 '+url+' 中是否存在拼写错误...')
+        _ = input(f'{Bcolors.BOLD}{Bcolors.FAIL}[Infrc002] 请求出错：请检查 '+filepath+' 中 '+url+f' 中是否存在拼写错误...{Bcolors.END}')
         sys.exit()
 
 def view_page(url):
@@ -143,17 +154,18 @@ def view_page(url):
     global blog_type
     try:
         if "csdn" in url:
-            blog_type = "[CSDN]"
-            read_num = int(re.compile(
-                '<span class="read-count">(.*?)</span>').search(get_page(url)).group(1))
+            blog_type = f"[{Bcolors.BOLD}{Bcolors.FAIL}CSDN{Bcolors.END}]"
+            read_num = f"{Bcolors.BOLD}"+re.compile(
+                '<span class="read-count">(.*?)</span>').search(get_page(url)).group(1)+f"{Bcolors.END}"
         else:
-            blog_type = "[未知]"
+            blog_type = f"[{Bcolors.BOLD}{Bcolors.OKCYAN}未知{Bcolors.END}]"
             read_num = ""
+            get_page(url)
     except AttributeError:
         read_num = "获取失败..."
 
 def main():
-    print("Infrc (Infinite Read-Count 无限阅读量) 推量工具 By 轩哥啊哈OvO")
+    print(f"{Bcolors.BOLD}Infrc (Infinite Read-Count 无限阅读量) 推量工具 By 轩哥啊哈OvO{Bcolors.END}")
     global filepath
     while True:
         '''填入待访问的博客下面刷取四个博客访问量'''
